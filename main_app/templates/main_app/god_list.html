@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>God List</h1>
+
+{% for god in god_list %}
+  <a href="{% url 'gods_detail' god.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ god.name }}</span>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

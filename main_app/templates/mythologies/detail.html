@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Mythology Details</h1>
+
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ mythology.name }}</span>
+        <p>region: {{ mythology.region }}</p>
+        <p>Description: {{ mythology.description|linebreaks }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'mythology_update' mythology.id %}">Edit</a>
+        <a href="{% url 'mythology_delete' mythology.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ mythology.name }}'s Gods</h3>
+    {% if mythology.gods.count %}
+      {% for god in mythology.gods.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              {{ god.name }}
+            </span>
+            <div class="card-action">
+              <form action="{% url 'remove_god' mythology.id god.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn">Remove</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Gods</h5>
+    {% endif %}
+  </div>
+  <!-- Available toys will come after this line -->
+  <div class="col s6">
+    <h3>Available Gods</h3>
+    {% if gods.count %}
+      {% for god in gods.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              {{ god.name }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_god' mythology.id god.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{mythology.name}} Already Has All Gods Available</h5>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  const selectEl = document.getElementById('id_meal');
+  M.FormSelect.init(selectEl);
+</script>
+{% endblock %}
