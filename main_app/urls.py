@@ -9,6 +9,7 @@ urlpatterns = [
     path('mythologies/create/', views.MythologyCreate.as_view(), name='mythology_create'),
     path('mythologies/<int:pk>/update/', views.MythologyUpdate.as_view(), name='mythology_update'),
   	path('mythologies/<int:pk>/delete/', views.MythologyDelete.as_view(), name='mythology_delete'),
+	path('mythologies/<int:mythology_id>/add_prayer/', views.add_prayer, name='add_prayer'),
   	path('gods/', views.GodList.as_view(), name='gods_index'),
   	path('gods/<int:pk>/', views.GodDetail.as_view(), name='gods_detail'),
   	path('gods/create/', views.GodCreate.as_view(), name='gods_create'),

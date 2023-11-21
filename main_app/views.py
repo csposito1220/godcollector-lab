@@ -21,8 +21,10 @@ def mythologies_detail(request, mythology_id):
   mythology = Mythology.objects.get(id=mythology_id)
   id_list = mythology.gods.all().values_list('id')
   gods_mythology_doesnt_have = God.objects.exclude(id__in=id_list)
+  prayer_form = PrayerForm()
   return render(request, 'mythologies/detail.html', {
     'mythology': mythology,
+    'prayer_form': prayer_form,
     'gods': gods_mythology_doesnt_have
   })
 
